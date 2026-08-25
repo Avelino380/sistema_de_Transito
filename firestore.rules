@@ -1,0 +1,57 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.email == 'avelinojonasse2022@gmail.com' ||
+        request.auth.token.email == 'admin@transito.gov.ao' ||
+        (exists(/databases/$(database)/documents/utilizadores/$(request.auth.uid)) && 
+         get(/databases/$(database)/documents/utilizadores/$(request.auth.uid)).data.perfil == 'Administrador')
+      );
+    }
+
+    // Coleção utilizadores
+    match /utilizadores/{userId} {
+      allow read: if isAuthenticated();
+      allow create, update: if isAuthenticated();
+      allow delete: if isAuthenticated();
+    }
+
+    // Coleção condutores
+    match /condutores/{condutorId} {
+      allow read, write: if isAuthenticated();
+    }
+
+    // Coleção viaturas
+    match /viaturas/{viaturaId} {
+      allow read, write: if isAuthenticated();
+    }
+
+    // Coleção multas
+    match /multas/{multaId} {
+      allow read, write: if isAuthenticated();
+    }
+
+    // Coleção pagamentos
+    match /pagamentos/{pagamentoId} {
+      allow read, write: if isAuthenticated();
+    }
+
+    // Coleção logsAuditoria
+    match /logsAuditoria/{logId} {
+      allow read, write: if isAuthenticated();
+    }
+
+    // Default fallback
+    match /{document=**} {
+      allow read, write: if isAuthenticated();
+    }
+  }
+}
+

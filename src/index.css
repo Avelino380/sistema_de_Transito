@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@layer utilities {
+  @media print {
+    body {
+      background: white !important;
+      color: black !important;
+    }
+    .no-print {
+      display: none !important;
+    }
+    .printable-area {
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      width: 100% !important;
+    }
+  }
+}

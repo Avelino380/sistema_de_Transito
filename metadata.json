@@ -1,0 +1,6 @@
+{
+  "name": "Sistema de Gestão de Multas de Trânsito",
+  "description": "Sistema profissional para gestão de condutores, viaturas, multas de trânsito, pagamentos, relatórios, auditoria e assistente inteligente com Gemini.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
